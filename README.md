@@ -14,5 +14,5 @@ In addition, you can change the titles to suit you better. Click on the title, i
 One page code, the main technology is Jquery.
 Feel free to use, copy, learn and maybe even share with me ideas, insights, and comments :)
 
-<-- קוד של עמוד אחד. השימוש העיקרי הוא ב Jquery.  
+קוד של עמוד אחד. השימוש העיקרי הוא ב Jquery.  
 תרגישו חופשי להשתמש, להעתיק, ללמוד ואולי גם לשתף אותי ברעינות, הארות,  והערות :)
