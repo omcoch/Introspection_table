@@ -11,6 +11,11 @@ In addition, you can change the titles to suit you better. Click on the title, i
 בנוסף, ניתן לשנות את הכותרות כך שיתאימו לכם יותר טוב. לחצו על הכותרת, היא ניתנת לעריכה.
 כל הנתונים נשמרים לוקלית, כלומר על הדפדפן ועל המכשיר שלכם. זה לא עובר מהמחשב לפלאפון או להפך. לחיצה על "מחק הכל" תגרום לאיבוד כל מה שכתבתם.
 
+### Single page website - אתר של דף יחיד
+The uniqueness of this site is that it operates as a single and independent page and this means that it can be downloaded to your computer or your smartphone and used even without the Internet.
+
+הייחודיות באתר הזה היא שהוא פועל כדף יחיד ועצמאי וזה אומר שניתן להוריד את למחשב או לפלאפון ולהשתמש בו גם ללא אינטרנט.
+
 ## Code - קוד
 One page code, the main technology is Jquery.
 Feel free to use, copy, learn and maybe even share with me ideas, insights, and comments :)
