@@ -1,7 +1,11 @@
 # Introspection_table
 Convenient interface for self reckoning or to sort out your dilemmas.
+Clcik [here](https://omcoch.github.io/Introspection_table) to the online page.
 
 ממשק נוח לעריכת חשבון-נפש או סתם סדר במחשבות ובהתלבטויות שלך.
+
+אפשר ללחוץ על הקישור כדי להכנס לאתר באונליין: 
+[https://omcoch.github.io/Introspection_table](https://omcoch.github.io/Introspection_table)
 
 ## Usage - שימוש
 Just fill in the table, each argument on the appropriate side.
