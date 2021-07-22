@@ -18,7 +18,7 @@ In addition, you can change the titles to suit you better. Click on the title, i
 ### Single page website - אתר של דף יחיד
 The uniqueness of this site is that it operates as a single and independent page and this means that it can be downloaded to your computer or your smartphone and used even without the Internet.
 
-הייחודיות באתר הזה היא שהוא פועל כדף יחיד ועצמאי וזה אומר שניתן להוריד את למחשב או לפלאפון ולהשתמש בו גם ללא אינטרנט.
+הייחודיות באתר הזה היא שהוא פועל כדף יחיד ועצמאי וזה אומר שניתן להוריד אותו למחשב או לפלאפון ולהשתמש בו גם ללא אינטרנט.
 
 ## Code - קוד
 One page code, the main technology is Jquery.
