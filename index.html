@@ -37,19 +37,68 @@
 					<input class="btn btn-danger" type="button" value="מחק הכל" onclick="clearAll()" />
 				</div>
 			</div>
+			<div class="row h-100">
+				<div class="col-12 mx-auto mt-4">
+
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#explanationModal">
+						מה זה בעצם?
+					</button>
+					
+					<!-- Modal -->
+					<div class="modal fade" id="explanationModal" tabindex="-1" role="dialog" aria-labelledby="explanationModalTitle" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header justify-content-center">
+								<h5 class="modal-title" id="explanationModalTitle">מה עושים פה?</h5>
+							</div>
+							<div class="modal-body text-right">
+								<p>
+									זה ממשק נוח לעריכת חשבון-נפש או סתם סדר במחשבות ובהתלבטויות שלך.
+								</p>
+								<p>
+									פשוט למלא את הטבלה, כל טיעון בצד המתאים. 
+									<br />
+									בנוסף, ניתן לשנות את 
+									<b>הכותרות</b>
+									כך שיתאימו לכם יותר טוב. לחצו על הכותרת, היא ניתנת לעריכה. 
+								</p>
+								<p>
+									כל הנתונים נשמרים לוקלית, כלומר על הדפדפן ועל המכשיר שלכם. זה לא עובר מהמחשב לפלאפון או להפך. לחיצה על 
+									<b>"מחק הכל"</b>
+									 תגרום לאיבוד כל מה שכתבתם.
+								</p>
+								<p>
+								הייחודיות באתר הזה היא שהוא פועל כדף יחיד ועצמאי וזה אומר שניתן 
+								<b>להוריד</b>
+								אותו למחשב או לפלאפון ולהשתמש בו גם ללא אינטרנט.
+								</p>
+							</div>
+							<div class="modal-footer justify-content-center">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">סגור</button>
+							</div>
+						</div>
+						</div>
+					</div>
+				
+				</div>
+			<div>
 		</div>
+
 	</body>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 	
 	<script>
+		const PROS_TITLE = "בעד";
+		const CONS_TITLE = "נגד";
 		var pros_index=-1;
-		var pros = [];
 		var cons_index=-1;
+		var pros = [];
 		var cons = [];
 		
-	// add additional input tag to the list pros/cons when the last focused.
+		// add additional input tag to the list pros/cons when the last focused.
 		$("#pros").on('focus', "input[type='text']:last-child", function() {
 				$("#pros").append('<br>','<input type="text" id="pros-'+(++pros_index)+'" />');	
 			}
@@ -59,8 +108,9 @@
 			}
 		);
 		
+		
 		// save the data to local storage
-		$("#pros, #cons").on('keyup', "input[type='text']", function() {
+		$("#pros, #cons").on('keyup', "input[type='text']", function(e) {
 			a = $(this).attr('id').split("-");
 			switch(a[0]) {
 				case 'pros':
@@ -69,8 +119,10 @@
 				case 'cons':
 					saveCons({key:a[1], val: $(this).val()});
 					break;
-				default: break;
 			}
+
+			if (e.keyCode == 13)
+				$(e.target).nextAll('input').first().focus();
 		});
 		
 		function savePros(data) {
@@ -85,6 +137,8 @@
 		
 		function clearAll() {
 			$("#pros input[type='text'], #cons input[type='text']").each(function() {$(this).val('')});
+			$("#pros_title").text(PROS_TITLE);
+			$("#cons_title").text(CONS_TITLE);
 			localStorage.clear();
 		}
 	
@@ -129,24 +183,23 @@
 		
 		function setDefaults() {
 			if (localStorage.pros_title === undefined)
-				localStorage.setItem("pros_title", "בעד");
+				localStorage.setItem("pros_title", PROS_TITLE);
 			if (localStorage.cons_title === undefined)
-				localStorage.setItem("cons_title", "נגד");
-		}
-		
-		$("#pros_title").keypress(function(e) {
-			localStorage.setItem("pros_title", $(this).text());
-			
-			if(e.code==="Enter")
-				$(this).nextAll('input').first().focus();
+				localStorage.setItem("cons_title", CONS_TITLE);
+		}		
+
+		$("#pros_title").on("input", function(e) {
+			localStorage.setItem("pros_title", $(e.target).text());
 		});
 		
-		$("#cons_title").keypress(function(e) {
-			localStorage.setItem("cons_title", $(this).text());
-			
-			if(e.code==="Enter")
-				$(this).nextAll('input').first().focus();
+		$("#cons_title").on("input", function(e) {
+			localStorage.setItem("cons_title", $(e.target).text());
 		});
+
+		$("#pros_title, #cons_title").keydown((e) => {
+			if (e.keyCode == 13)
+				$(e.target).nextAll('input').first().focus();
+		})
 	</script>
 	
 </html>
