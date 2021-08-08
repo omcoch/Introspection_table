@@ -91,12 +91,26 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 	
 	<script>
+	
 		const PROS_TITLE = "בעד";
 		const CONS_TITLE = "נגד";
+		const LS_PREFIX = "INTABLE-";
 		var pros_index=-1;
 		var cons_index=-1;
 		var pros = [];
 		var cons = [];
+		
+		
+		function setLocalStorage(item, content) {
+			localStorage.setItem(LS_PREFIX + item, content);
+		}
+		
+		function getLocalStorage(item) {
+			return localStorage.getItem(LS_PREFIX + item);
+		}
+		
+		
+		
 		
 		// add additional input tag to the list pros/cons when the last focused.
 		$("#pros").on('focus', "input[type='text']:last-child", function() {
@@ -127,12 +141,12 @@
 		
 		function savePros(data) {
 			pros[data.key] = data.val;
-			localStorage.setItem("pros", JSON.stringify(pros));
+			setLocalStorage("pros", JSON.stringify(pros));
 		}
 		
 		function saveCons(data) {
 			cons[data.key] = data.val;
-			localStorage.setItem("cons", JSON.stringify(cons));
+			setLocalStorage("cons", JSON.stringify(cons));
 		}
 		
 		function clearAll() {
@@ -143,13 +157,13 @@
 		}
 	
 		function fillAll() {
-			$("#pros_title").text(localStorage.getItem("pros_title"));
-			$("#cons_title").text(localStorage.getItem("cons_title"));
+			$("#pros_title").text(getLocalStorage("pros_title"));
+			$("#cons_title").text(getLocalStorage("cons_title"));
 			
-			if (localStorage.pros === undefined) localStorage.setItem("pros", JSON.stringify(pros));
-			else pros = JSON.parse(localStorage.getItem("pros"));
-			if (localStorage.cons === undefined) localStorage.setItem("cons", JSON.stringify(cons));
-			else cons = JSON.parse(localStorage.getItem("cons"));
+			if (getLocalStorage("pros") == null) setLocalStorage("pros", JSON.stringify(pros));
+			else pros = JSON.parse(getLocalStorage("pros"));
+			if (getLocalStorage("cons") == null) setLocalStorage("cons", JSON.stringify(cons));
+			else cons = JSON.parse(getLocalStorage("cons"));
 			
 			pros.forEach(fillPros);
 			cons.forEach(fillCons);
@@ -182,18 +196,18 @@
 		
 		
 		function setDefaults() {
-			if (localStorage.pros_title === undefined)
-				localStorage.setItem("pros_title", PROS_TITLE);
-			if (localStorage.cons_title === undefined)
-				localStorage.setItem("cons_title", CONS_TITLE);
+			if (getLocalStorage("pros_title") === null)
+				setLocalStorage("pros_title", PROS_TITLE);
+			if (getLocalStorage("cons_title") === null)
+				setLocalStorage("cons_title", CONS_TITLE);
 		}		
 
 		$("#pros_title").on("input", function(e) {
-			localStorage.setItem("pros_title", $(e.target).text());
+			setLocalStorage("pros_title", $(e.target).text());
 		});
 		
 		$("#cons_title").on("input", function(e) {
-			localStorage.setItem("cons_title", $(e.target).text());
+			setLocalStorage("cons_title", $(e.target).text());
 		});
 
 		$("#pros_title, #cons_title").keydown((e) => {
