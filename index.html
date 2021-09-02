@@ -48,41 +48,51 @@
 					<!-- Modal -->
 					<div class="modal fade" id="explanationModal" tabindex="-1" role="dialog" aria-labelledby="explanationModalTitle" aria-hidden="true">
 						<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header justify-content-center">
-								<h5 class="modal-title" id="explanationModalTitle">מה עושים פה?</h5>
+							<div class="modal-content">
+								<div class="modal-header justify-content-center">
+									<h5 class="modal-title" id="explanationModalTitle">מה עושים פה?</h5>
+								</div>
+								<div class="modal-body text-right">
+									<p>
+										זה ממשק נוח לעריכת חשבון-נפש או סתם סדר במחשבות ובהתלבטויות שלך.
+									</p>
+									<p>
+										פשוט למלא את הטבלה, כל טיעון בצד המתאים. 
+										<br />
+										בנוסף, ניתן לשנות את 
+										<b>הכותרות</b>
+										כך שיתאימו לכם יותר טוב. לחצו על הכותרת, היא ניתנת לעריכה. 
+									</p>
+									<p>
+										כל הנתונים נשמרים לוקלית, כלומר על הדפדפן ועל המכשיר שלכם. זה לא עובר מהמחשב לפלאפון או להפך. לחיצה על 
+										<b>"מחק הכל"</b>
+										 תגרום לאיבוד כל מה שכתבתם.
+									</p>
+									<p>
+									הייחודיות באתר הזה היא שהוא פועל כדף יחיד ועצמאי וזה אומר שניתן 
+									<b>להוריד</b>
+									אותו למחשב או לפלאפון ולהשתמש בו גם ללא אינטרנט.
+									</p>
+								</div>
+								<div class="modal-footer justify-content-center">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">סגור</button>
+								</div>
 							</div>
-							<div class="modal-body text-right">
-								<p>
-									זה ממשק נוח לעריכת חשבון-נפש או סתם סדר במחשבות ובהתלבטויות שלך.
-								</p>
-								<p>
-									פשוט למלא את הטבלה, כל טיעון בצד המתאים. 
-									<br />
-									בנוסף, ניתן לשנות את 
-									<b>הכותרות</b>
-									כך שיתאימו לכם יותר טוב. לחצו על הכותרת, היא ניתנת לעריכה. 
-								</p>
-								<p>
-									כל הנתונים נשמרים לוקלית, כלומר על הדפדפן ועל המכשיר שלכם. זה לא עובר מהמחשב לפלאפון או להפך. לחיצה על 
-									<b>"מחק הכל"</b>
-									 תגרום לאיבוד כל מה שכתבתם.
-								</p>
-								<p>
-								הייחודיות באתר הזה היא שהוא פועל כדף יחיד ועצמאי וזה אומר שניתן 
-								<b>להוריד</b>
-								אותו למחשב או לפלאפון ולהשתמש בו גם ללא אינטרנט.
-								</p>
-							</div>
-							<div class="modal-footer justify-content-center">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">סגור</button>
-							</div>
-						</div>
 						</div>
 					</div>
 				
 				</div>
-			<div>
+			</div>
+			<div class="row h-100">
+				<div class="col-12 mx-auto mt-5">
+					<button type="button" class="btn btn-link" onclick="getLocalstorageToFile('intospection_backup')" />לגבות נתונים</button>
+					|
+					<input type="file" id="bu_file" multiple accept="json/*" style="display:none">
+					<button id="fileSelect" type="button" class="btn btn-link" onclick="$('#bu_file').click()" data-toggle="tooltip" 	data-placement="left" title="זה עלול למחוק את מה שרשמת עד עכשיו!"/>
+					לטעון נתונים מקובץ
+					</button>
+				</div>
+			</div>
 		</div>
 
 	</body>
@@ -91,6 +101,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 	
 	<script>
+	$('[data-toggle="tooltip"]').tooltip()
 	
 		const PROS_TITLE = "בעד";
 		const CONS_TITLE = "נגד";
@@ -215,5 +226,65 @@
 				$(e.target).nextAll('input').first().focus();
 		})
 	</script>
+	
+	
+	<script>
+		function getLocalstorageToFile(fileName) {
+  
+		  /* dump local storage to string */
+		  
+		  var a = {};
+		  for (var i = 0; i < localStorage.length; i++) {
+			var k = localStorage.key(i);
+			var v = localStorage.getItem(k);
+			a[k] = v;
+		  }
+		  
+		  /* save as blob */
+		  
+		  var textToSave = JSON.stringify(a)
+		  var textToSaveAsBlob = new Blob([textToSave], {
+			type: "application/json"
+		  });
+		  var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+		  
+		  /* download without button hack */
+		  
+		  var downloadLink = document.createElement("a");
+		  downloadLink.download = fileName;
+		  downloadLink.innerHTML = "Download File";
+		  downloadLink.href = textToSaveAsURL;
+		  downloadLink.onclick = function () {
+			document.body.removeChild(event.target);
+		  };
+		  downloadLink.style.display = "none";
+		  document.body.appendChild(downloadLink);
+		  downloadLink.click();
+		  
+		}
+		
+		document.getElementById("bu_file").addEventListener("change", function() {
+			if (!this.files.length) { alert("יש בעיה, לא נבחרו קבצים."); return; }
+			
+			file = this.files[0];
+			if (!file.type.startsWith('application/json')){ alert("זה לא קובץ גיבוי תקין"); return; }
+			
+			const reader = new FileReader()
+			reader.onload = (event) => {
+				let content = JSON.parse(event.target.result);
+
+				for (var key in content) {
+					localStorage.setItem(key, content[key]);
+				}				
+				location.reload()
+				
+			}
+			reader.readAsText(event.target.files[0])					
+		}, false);
+
+
+	</script>
+
+
 	
 </html>
